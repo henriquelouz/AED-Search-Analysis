@@ -12,11 +12,45 @@ namespace AED_Search_Analysis
         {
             Pesquisa pesquisa = new Pesquisa(extrair("dados_airbnb.txt"));
 
-            imprimir(pesquisa.Sequencial(5752076));
-            imprimir(pesquisa.Binária(5752076));
-            imprimir(pesquisa.Árvore(5752076));
-            pesquisa.QuartosPorCidade().ForEach(delegate (Cidade c) { Console.WriteLine("{0} - {1}", c.Nome, c.Quartos); });
-            imprimirPreços(pesquisa.Preços("Paris"));
+            Console.WriteLine("******************************");
+            Console.WriteLine("* Pesquisa de quartos Airbnb *");
+            Console.WriteLine("******************************");
+            int comando;
+
+            do
+            {
+                Console.WriteLine("\nOpções:");
+                Console.Write("[0] Sair\n[1] Sequencial\n[2] Binária\n[3] Árvore\n[4] Quartos por cidade\n[5] Preços\n:");
+                comando = int.Parse(Console.ReadLine());
+
+                switch (comando)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Console.Write("ID do quarto: ");
+                        imprimir(pesquisa.Sequencial(int.Parse(Console.ReadLine())));
+                        break;
+                    case 2:
+                        Console.Write("ID do quarto: ");
+                        imprimir(pesquisa.Binária(int.Parse(Console.ReadLine())));
+                        break;
+                    case 3:
+                        Console.Write("ID do quarto: ");
+                        imprimir(pesquisa.Árvore(int.Parse(Console.ReadLine())));
+                        break;
+                    case 4:
+                        pesquisa.QuartosPorCidade().ForEach(delegate (Cidade c) { Console.WriteLine("{0} - {1}", c.Nome, c.Quartos); });
+                        break;
+                    case 5:
+                        Console.Write("Cidade: ");
+                        imprimirPreços(pesquisa.Preços(Console.ReadLine()));
+                        break;
+                    default:
+                        Console.WriteLine("Comando inválido.");
+                        break;
+                }
+            } while (comando != 0);
         }
 
         static List<Quarto> extrair(string dir)
@@ -77,8 +111,6 @@ namespace AED_Search_Analysis
         {
             if (quartos != null)
             {
-                Console.WriteLine(quartos[0].cidade);
-
                 Console.Write("Mais caro: ");
                 imprimir(quartos[0]);
 
