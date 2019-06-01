@@ -50,6 +50,15 @@ namespace AED_Search_Analysis
             return árvore.Pesquisar(idQuarto);
         }
 
+        public Quarto TabelaHash(int idQuarto)
+        {
+            TabelaHash tabela = new TabelaHash(Quartos.Count);
+            foreach (Quarto q in Quartos)
+                tabela.Inserir(q);
+
+            return tabela.Pesquisar(idQuarto);
+        }
+
         private void ordenarQuartos(Quarto[] vetor, int esquerda, int direita)
         {
             int i = esquerda,
@@ -192,6 +201,57 @@ namespace AED_Search_Analysis
             else if (item.idQuarto > no.Item.idQuarto)
                 no.Dir = inserir(no.Dir, item);
             return no;
+        }
+    }
+
+    class TabelaHash
+    {
+        Quarto[] tabela;
+        int max, tam;
+
+        public TabelaHash(int n)
+        {
+            max = n;
+            tabela = new Quarto[n];
+        }
+
+        private int h(int _chave)
+        {
+            return _chave % max;
+        }
+
+        public void Inserir(Quarto q)
+        {
+            if (tam == max)
+                return;
+
+            int pos = h(q.idQuarto);
+
+            while (tabela[pos] != null)
+                pos = (pos + 1) % max;
+
+            tabela[pos] = q;
+            tam++;
+        }
+
+        public Quarto Pesquisar(int _chave)
+        {
+            int pos = h(_chave);
+            int i = 0;
+            while (
+                i < max
+                && tabela[pos] != null
+                || (tabela == null && tabela[pos].idQuarto != _chave)
+            )
+            {
+                pos = (pos + 1) % max;
+                i++;
+            }
+
+            if (tabela[pos] != null && tabela[pos].idQuarto == _chave)
+                return tabela[pos];
+
+            return null;
         }
     }
 }

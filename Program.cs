@@ -20,7 +20,7 @@ namespace AED_Search_Analysis
             do
             {
                 Console.WriteLine("\nOpções:");
-                Console.Write("[0] Sair\n[1] Sequencial\n[2] Binária\n[3] Árvore\n[4] Quartos por cidade\n[5] Preços\n:");
+                Console.Write("[0] Sair\n[1] Sequencial\n[2] Binária\n[3] Árvore\n[4] Tabela Hash\n[5] Quartos por cidade\n[6] Preços\n:");
                 comando = int.Parse(Console.ReadLine());
 
                 switch (comando)
@@ -40,9 +40,13 @@ namespace AED_Search_Analysis
                         imprimir(pesquisa.Árvore(int.Parse(Console.ReadLine())));
                         break;
                     case 4:
-                        pesquisa.QuartosPorCidade().ForEach(delegate (Cidade c) { Console.WriteLine("{0} - {1}", c.Nome, c.Quartos); });
+                        Console.Write("ID do quarto: ");
+                        imprimir(pesquisa.TabelaHash(int.Parse(Console.ReadLine())));
                         break;
                     case 5:
+                        pesquisa.QuartosPorCidade().ForEach(delegate (Cidade c) { Console.WriteLine("{0} - {1}", c.Nome, c.Quartos); });
+                        break;
+                    case 6:
                         Console.Write("Cidade: ");
                         imprimirPreços(pesquisa.Preços(Console.ReadLine()));
                         break;
